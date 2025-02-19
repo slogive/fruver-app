@@ -12,7 +12,10 @@
 		"build": "tsc -b && vite build",
 		"lint": "eslint .",
 		"preview": "vite preview",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"patch": "npm version patch",
+		"minor": "npm version minor",
+		"major": "npm version major"
 	},
 	"dependencies": {
 		"antd": "^5.24.1",

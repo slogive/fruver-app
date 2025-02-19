@@ -1,0 +1,158 @@
+$gap: 1rem;
+$pad: 1rem;
+$border-radius: 4px;
+
+@mixin shared {
+	border: 1px solid #d9d9d9;
+	border-radius: $border-radius;
+}
+
+@mixin add {
+	background-color: #0071bd;
+	color: white;
+}
+
+@mixin subtract {
+	background-color: #fd0000;
+	color: white;
+}
+
+@mixin text {
+	font-size: 1rem;
+	line-height: 1rem;
+	font-weight: 500;
+}
+
+#root {
+	text-align: center;
+
+	.store {
+		display: grid;
+		gap: $gap;
+		max-width: 100vw;
+		overflow: hidden;
+		grid-template-rows: repeat(3, min-content) 1fr;
+		min-height: calc(100dvh - calc(2 * #{$pad}));
+		padding: $pad;
+
+		header {
+			display: grid;
+			grid-template-columns: min-content auto min-content;
+			gap: $gap;
+			align-items: center;
+
+			.logo {
+				width: 50px;
+				height: 50px;
+			}
+
+			h1 {
+				margin: 0;
+				text-align: left;
+			}
+
+			.user {
+				display: grid;
+				white-space: nowrap;
+				gap: $gap;
+				grid-template-columns: min-content auto;
+				align-items: center;
+
+				@include text;
+			}
+		}
+
+		/* Buttons */
+		// .ant-btn.add {
+		// 	@include add;
+		// }
+
+		// .ant-btn.subtract {
+		// 	@include subtract;
+		// }
+
+		.products {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: $gap;
+			justify-content: flex-start;
+
+			.product {
+				border-radius: $border-radius;
+				text-align: center;
+				padding: $pad;
+				background-color: #fafafa;
+				width: 100%;
+				transition: filter 0.3s;
+
+				&:hover {
+					filter: brightness(0.97);
+				}
+
+				b {
+					font-size: 1rem;
+					line-height: 1rem;
+					font-weight: 500;
+				}
+
+				@include shared;
+
+				display: grid;
+				gap: $gap;
+
+				.actions {
+					display: grid;
+					gap: $gap;
+					grid-template-columns: repeat(2, 1fr);
+					justify-items: center;
+
+					.button {
+						border-radius: $border-radius;
+					}
+				}
+			}
+		}
+
+		.table {
+			overflow-x: auto;
+
+			@include shared;
+
+			.ant-table-thead {
+				@include text;
+			}
+
+			.ant-table-cell {
+				padding: $pad;
+			}
+
+			.actions {
+				display: grid;
+				gap: $gap;
+				grid-template-columns: repeat(2, 50px);
+				justify-items: center;
+			}
+		}
+
+		.list {
+			border-radius: $border-radius;
+
+			@include shared;
+
+			.ant-list-header {
+				padding: $pad;
+				@include text;
+			}
+
+			.ant-list-item {
+				padding: $pad;
+			}
+		}
+
+		footer {
+			display: grid;
+			align-items: flex-end;
+			@include text;
+		}
+	}
+}

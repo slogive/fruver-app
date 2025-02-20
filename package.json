@@ -15,9 +15,18 @@
 		"format": "prettier --write .",
 		"patch": "npm version patch",
 		"minor": "npm version minor",
-		"major": "npm version major"
+		"major": "npm version major",
+		"cap:assets": "bunx capacitor-assets generate",
+		"cap:add": "bun run clean && bunx cap add android",
+		"cap:sync": "bunx cap sync",
+		"cap:run": "bunx cap run android",
+		"cap:open": "bunx cap open android",
+		"clean": "rimraf ./android",
+		"cap:start": "bun run clean && bunx cap add android && bun run cap:assets && bunx cap sync && bunx cap run android"
 	},
 	"dependencies": {
+		"@capacitor/android": "^7.0.1",
+		"@capacitor/core": "^7.0.1",
 		"antd": "^5.24.1",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
@@ -26,7 +35,10 @@
 		"uuid": "^11.0.5"
 	},
 	"devDependencies": {
+		"@capacitor/assets": "^3.0.5",
+		"@capacitor/cli": "^7.0.1",
 		"@eslint/js": "^9.19.0",
+		"@types/bun": "latest",
 		"@types/react": "^19.0.8",
 		"@types/react-dom": "^19.0.3",
 		"@vitejs/plugin-react": "^4.3.4",
@@ -35,8 +47,10 @@
 		"eslint-plugin-react-refresh": "^0.4.18",
 		"globals": "^15.14.0",
 		"prettier": "^3.5.1",
+		"rimraf": "^6.0.1",
 		"typescript": "~5.7.2",
 		"typescript-eslint": "^8.22.0",
 		"vite": "^6.1.0"
-	}
+	},
+	"module": "index.ts"
 }

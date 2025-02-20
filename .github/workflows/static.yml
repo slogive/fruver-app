@@ -32,8 +32,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
-        uses: actions/checkout@v4
-      - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Install Bun
         uses: oven-sh/setup-bun@v1
@@ -51,30 +49,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-  release:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Needed to fetch all history for tags
-
-      - name: Get current version from package.json
-        id: package-version
-        run: |
-          VERSION=$(jq -r .version package.json)
-          echo "::set-output name=value::$VERSION"
-
-      - name: Create Release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.package-version.outputs.value }}
-          release_name: Release v${{ steps.package-version.outputs.value }}
-          body: |
-            Release notes generated automatically.
-          draft: false
-          prerelease: false

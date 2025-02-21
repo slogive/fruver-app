@@ -1,0 +1,39 @@
+name: Build and Release Staging APK
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Staging
+
+      - name: Build and Package Staging APK
+        run: |
+          docker build -t fruver-app -f Dockerfile .
+          docker run -d --name fruver-app fruver-app:latest
+          mkdir -p packages
+          docker cp fruver-app:/outputs/app-release.apk ./packages/app-release.apk
+
+      - name: Set Staging Asset Name
+        id: set-staging-asset-name
+        run: |
+          VERSION=$(echo "${{ github.event.release.tag_name }}" | sed 's/^v//')
+          ASSET_NAME="fruver-app-${VERSION}.apk"
+          echo "asset_name=${ASSET_NAME}" >> $GITHUB_ENV
+
+      - name: Publish Staging APK to Releases
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./packages/app-release.apk
+          asset_name: ${{ env.asset_name }}
+          asset_content_type: application/vnd.android.package-archive
